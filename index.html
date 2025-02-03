@@ -214,8 +214,6 @@
         font-size: 15px;
       }
 
-      
-
       span a{
         color: white;
         text-decoration: underline;
@@ -301,7 +299,25 @@
     }
   }
 
-  
+  /* Estilo para o pop-up de conclusão */
+  .completion-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    color: #FFD700;
+    font-size: 24px;
+    text-align: center;
+    display: none;
+    z-index: 1000;
+  }
+
+  .completion-popup.active {
+    display: block;
+  }
 
     </style>
   </head>
@@ -348,6 +364,11 @@
       </div>
     </div>
 
+    <!-- Pop-up de conclusão -->
+    <div class="completion-popup" id="completion-popup">
+      Parabéns! Você passou todos os níveis e obrigado por jogar!
+    </div>
+
     <footer>
       <div class="footer">
         <p>Powered by <span><a href="https://github.com/BssEric" target="_blank">BssEric</a></span></p>
@@ -375,6 +396,7 @@
       const backgroundAudio = document.getElementById('background-audio');
       const dunkSound = document.getElementById('dunk-sound');
       const levelInfo = document.getElementById('level-info');
+      const completionPopup = document.getElementById('completion-popup');
 
       let selectedDunk = null;
       let forceLevel = 0;
@@ -471,6 +493,12 @@
         }
 
         if (score >= currentLevel * 100) {
+          if (currentLevel === 12) {
+            completionPopup.classList.add('active');
+            startButton.disabled = true;
+            stopButton.disabled = true;
+            return;
+          }
           increaseDifficulty();
         }
 
@@ -494,5 +522,5 @@
         }, 1500);
       });
     </script>
-  
+
 </body></html>
